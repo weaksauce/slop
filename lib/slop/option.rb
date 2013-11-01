@@ -1,7 +1,7 @@
 module Slop
   class Option
 
-    attr_reader :parser, :attributes
+    attr_reader :parser, :attributes, :processor
     attr_writer :writer
     attr_accessor :short, :long, :description, :block, :count, :argument
 
@@ -15,6 +15,8 @@ module Slop
       @argument    = nil
       @value       = nil
       @count       = 0
+      @processor   = Value.from_name(attributes[:value]).new(parser)
+      @attributes  = @processor.option_config.merge(@attributes)
     end
 
     def expects_argument?
@@ -25,14 +27,8 @@ module Slop
       @value || @argument || attributes[:default]
     end
 
-    def value_processor
-      value = Value.from_name(attributes[:value]).new(parser)
-      @attributes = value.option_config.merge(attributes)
-      value
-    end
-
     def run_block
-      @value = value_processor.call(@argument)
+      @value = processor.call(@argument)
       block.call(@value) if block
     end
 

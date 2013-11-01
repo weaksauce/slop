@@ -10,6 +10,7 @@ module Slop
 
     def on(*values, &block)
       config = OptionConfig.build(values)
+      config[:value] ||= :string
       option = Option.new(parser, config, &block)
       options << option
       option

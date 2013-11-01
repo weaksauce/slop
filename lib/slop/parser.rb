@@ -22,14 +22,18 @@ module Slop
     end
 
     def [](flag)
-      option = options.find_by_flag(flag)
+      option = find_option(flag)
       option && option.value
+    end
+
+    def find_option(flag)
+      options.find_by_flag(flag)
     end
 
     def method_missing(method_name, *args)
       if respond_to_missing?(method_name)
         name = method_name.to_s[0..-2]
-        options.find_by_flag(name).count > 0
+        find_option(name).count > 0
       else
         super
       end
@@ -38,14 +42,14 @@ module Slop
     def respond_to_missing?(method_name, include_private = false)
       super unless method_name.to_s.end_with?('?')
       name = method_name.to_s[0..-2]
-      options.find_by_flag(name) || super
+      find_option(name) || super
     end
 
     private
 
     def parse_item(flag, argument)
       if flag.start_with?('-')
-        option = options.find_by_flag(flag)
+        option = find_option(flag)
 
         if option
           if option.expects_argument? && argument.nil?
