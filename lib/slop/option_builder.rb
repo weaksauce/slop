@@ -10,17 +10,15 @@ module Slop
 
     def on(*values, &block)
       config = OptionConfig.build(values)
-      option = Option.new(config, &block)
+      option = Option.new(parser, config, &block)
       options << option
       option
     end
 
     def method_missing(method_name, *args, &block)
       if respond_to_missing?(method_name)
-        value  = Value.from_name(method_name).new(parser)
         config = args[-1].is_a?(Hash) ? args.pop : {}
-        config = value.option_config.merge(config)
-        config[:value] ||= value
+        config[:value] ||= method_name
         args << config
         on(*args, &block)
       else

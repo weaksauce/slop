@@ -15,4 +15,14 @@ describe Slop::OptionBuilder do
       subject.options.options.must_equal [option]
     end
   end
+
+  describe "method_missing" do
+    it "sets the value config attribute" do
+      option = subject.string("foo")
+      option.attributes[:value].must_equal :string
+      option.value_processor.must_be_kind_of Slop::Values::StringValue
+      option.attributes.must_equal({ expects_argument: true,
+        value: :string, long: "foo" })
+    end
+  end
 end
