@@ -15,18 +15,18 @@ describe Slop::OptionBuilder do
       subject.options.options.must_equal [option]
     end
 
-    it "defaults value attribute to :string" do
-      subject.on("foo").attributes[:value].must_equal :string
+    it "defaults processor attribute to :string" do
+      subject.on("foo").attributes[:processor].must_equal :string
     end
   end
 
   describe "method_missing" do
-    it "sets the value config attribute" do
+    it "sets the processor config attribute" do
       option = subject.string("foo")
-      option.attributes[:value].must_equal :string
+      option.attributes[:processor].must_equal :string
       option.processor.must_be_kind_of Slop::Processors::StringProcessor
       option.attributes.must_equal({ expects_argument: true,
-        value: :string, long: "foo" })
+        processor: :string, long: "foo" })
     end
   end
 end

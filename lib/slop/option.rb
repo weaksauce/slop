@@ -15,7 +15,7 @@ module Slop
       @argument    = nil
       @value       = nil
       @count       = 0
-      @processor   = Processor.from_name(attributes[:value]).new(parser)
+      @processor   = Processor.from_name(attributes[:processor]).new(parser)
       @attributes  = @processor.option_config.merge(@attributes)
     end
 
