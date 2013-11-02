@@ -43,6 +43,17 @@ describe Slop::Parser do
         subject.find_option("bar").argument.must_equal nil
       end
     end
+
+    describe "option=argument" do
+      before do
+        subject.builder.string "foo"
+        subject.parse %w(--foo=hello)
+      end
+
+      it "assigns the argument" do
+        subject.find_option("foo").argument.must_equal "hello"
+      end
+    end
   end
 
   describe "#[]" do

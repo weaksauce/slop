@@ -49,6 +49,7 @@ module Slop
 
     def parse_item(flag, argument)
       if flag.start_with?('-')
+        flag, argument = flag.split('=') if flag.include?('=')
         option = find_option(flag)
 
         if option
