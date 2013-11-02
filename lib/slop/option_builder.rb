@@ -28,7 +28,7 @@ module Slop
     end
 
     def respond_to_missing?(method_name, include_private = false)
-      Value.exists?(method_name) || super
+      Processor.exists?(method_name) || super
     end
 
   end

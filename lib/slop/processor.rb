@@ -1,23 +1,23 @@
 module Slop
-  module Values
+  module Processors
   end
 
-  class Value
+  class Processor
     def self.aliases
       @aliases ||= {}
     end
 
     def self.exists?(value)
-      Values.constants.include?(to_constant_name(value))
+      Processors.constants.include?(to_constant_name(value))
     end
 
     def self.to_constant_name(name)
       name = aliases[name.to_s] if aliases.key?(name.to_s)
-      :"#{name.to_s.capitalize}Value"
+      :"#{name.to_s.capitalize}Processor"
     end
 
     def self.from_name(name)
-      Values.const_get to_constant_name(name)
+      Processors.const_get to_constant_name(name)
     end
 
     def self.add_alias(this, that)
@@ -47,6 +47,6 @@ module Slop
   end
 end
 
-require "slop/values/string_value"
-require "slop/values/integer_value"
-require "slop/values/boolean_value"
+require "slop/processors/string_processor"
+require "slop/processors/integer_processor"
+require "slop/processors/boolean_processor"
