@@ -54,6 +54,25 @@ describe Slop::Parser do
         subject.find_option("foo").argument.must_equal "hello"
       end
     end
+
+    describe "multiple options" do
+      before do
+        subject.builder.boolean "a"
+        subject.builder.boolean "b"
+        subject.builder.string "c"
+        subject.parse %w(-abc foo)
+      end
+
+      it "sets the boolean options to true" do
+        subject.a?.must_equal true
+        subject.b?.must_equal true
+        subject["c"].must_equal "foo"
+      end
+
+      it "raises for unknown options" do
+        -> { subject.parse %w(-abd) }.must_raise(RuntimeError)
+      end
+    end
   end
 
   describe "#[]" do

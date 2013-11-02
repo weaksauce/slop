@@ -58,11 +58,22 @@ module Slop
           end
           execute_option(option, argument)
         else
-          raise "Unknown option `#{flag}'"
+          if flag[1] != '-' && flag.size > 2
+            parse_multiple(flag, argument)
+          else
+            raise "Unknown option `#{flag}'"
+          end
         end
       else
 
       end
+    end
+
+    def parse_multiple(flag, argument)
+      flag[1..-2].split('').each do |f|
+        parse_item("-#{f}", nil)
+      end
+      parse_item("-#{flag[-1]}", argument)
     end
 
     def execute_option(option, argument)
