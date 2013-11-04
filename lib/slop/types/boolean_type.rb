@@ -1,5 +1,5 @@
-module Slop::Processors
-  class BooleanProcessor < Slop::Processor
+module Slop::Types
+  class BooleanType < Slop::Type
 
     def call(*)
       true

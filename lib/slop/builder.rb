@@ -10,7 +10,7 @@ module Slop
 
     def on(*values, &block)
       config = OptionConfig.build(values)
-      config[:processor] ||= :string
+      config[:type] ||= :string
       option = Option.new(parser, config, &block)
       options << option
       option
@@ -19,7 +19,7 @@ module Slop
     def method_missing(method_name, *args, &block)
       if respond_to_missing?(method_name)
         config = args[-1].is_a?(Hash) ? args.pop : {}
-        config[:processor] ||= method_name
+        config[:type] ||= method_name
         args << config
         on(*args, &block)
       else
@@ -28,7 +28,7 @@ module Slop
     end
 
     def respond_to_missing?(method_name, include_private = false)
-      Processor.exists?(method_name) || super
+      Type.exists?(method_name) || super
     end
 
   end
