@@ -1,12 +1,11 @@
 module Slop
   class Parser
-    attr_reader :config, :builder, :parsed_options
+    attr_reader :config, :builder, :options
 
     def initialize(builder, config = {}, &block)
       @config  = config
       @builder = builder
-
-      @parsed_options = []
+      @options = []
     end
 
     def parse(items = ARGV, &block)
@@ -14,7 +13,7 @@ module Slop
         parse_item(flag, argument)
       end
       parse_item(items.last, nil) # each cons misses the last flag
-      parsed_options.each(&:run_block)
+      options.each(&:run_block)
       items
     end
 
@@ -76,7 +75,7 @@ module Slop
     def execute_option(option, argument)
       option.count += 1
       option.argument = argument
-      parsed_options << option
+      options << option
     end
 
   end

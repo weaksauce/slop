@@ -5,6 +5,7 @@ module Slop
     def initialize(config = {})
       @config  = config
       @options = []
+      yield self if block_given?
     end
 
     def on(*values, &block)
