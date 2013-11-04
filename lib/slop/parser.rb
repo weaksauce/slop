@@ -1,44 +1,21 @@
 module Slop
   class Parser
-    attr_reader :config, :builder, :options
+    attr_reader :config, :builder, :options, :result
 
     def initialize(builder, config = {}, &block)
       @config  = config
       @builder = builder
       @options = []
+      @result  = Result.new(builder, self)
     end
 
     def parse(items = ARGV, &block)
-      items.each_cons(2).each do |flag, argument|
-        parse_item(flag, argument)
-      end
+      items.each_cons(2).each { |flag, arg| parse_item(flag, arg) }
       parse_item(items.last, nil) # each cons misses the last flag
-      options.each(&:run_block)
-      items
-    end
 
-    def [](flag)
-      option = find_option(flag)
-      option && option.value
-    end
+      options.each { |opt| opt.call(result) }
 
-    def find_option(flag)
-      builder.find_option(flag)
-    end
-
-    def method_missing(method_name, *args)
-      if respond_to_missing?(method_name)
-        name = method_name.to_s[0..-2]
-        find_option(name).count > 0
-      else
-        super
-      end
-    end
-
-    def respond_to_missing?(method_name, include_private = false)
-      super unless method_name.to_s.end_with?('?')
-      name = method_name.to_s[0..-2]
-      find_option(name) || super
+      result
     end
 
     private
@@ -46,10 +23,10 @@ module Slop
     def parse_item(flag, argument)
       if flag.start_with?('-')
         flag, argument = flag.split('=') if flag.include?('=')
-        option = find_option(flag)
+        option = builder.find_option(flag)
 
         if option
-          if option.expects_argument? && argument.nil?
+          if option.argument? && argument.nil?
             raise "No argument given for `#{flag}'"
           end
           execute_option(option, argument)

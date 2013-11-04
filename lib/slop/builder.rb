@@ -18,7 +18,7 @@ module Slop
 
     def find_option(flag)
       flag = flag.to_s.sub(/\A--?/, '')
-      options.find { |o| o.long == flag || o.short == flag }
+      options.find { |o| o.long.to_s == flag || o.short.to_s == flag }
     end
 
     def method_missing(method_name, *args, &block)

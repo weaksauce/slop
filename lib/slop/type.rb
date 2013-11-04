@@ -3,8 +3,17 @@ module Slop
   end
 
   class Type
+
+    def self.option_config
+      @option_config ||= { argument: true }
+    end
+
     def self.aliases
       @aliases ||= {}
+    end
+
+    def self.config(hash)
+      @option_config = hash
     end
 
     def self.exists?(value)
@@ -28,22 +37,17 @@ module Slop
     add_alias "int",  "integer"
     add_alias "bool", "boolean"
 
-    attr_reader :builder
+    attr_reader :result
 
-    def initialize(builder)
-      @builder = builder
+    def initialize(result)
+      @result = result
     end
 
-    alias options builder
+    alias options result
 
     def call
       raise
     end
-
-    def option_config
-      { expects_argument: true }
-    end
-
   end
 end
 

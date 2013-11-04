@@ -42,8 +42,8 @@ describe Slop::Builder do
     it "sets the Type config attribute" do
       option = subject.string("foo")
       option.attributes[:type].must_equal :string
-      option.type.must_be_kind_of Slop::Types::StringType
-      option.attributes.must_equal({ expects_argument: true,
+      option.type_class.must_equal Slop::Types::StringType
+      option.attributes.must_equal({ argument: true,
         type: :string, long: "foo" })
     end
   end

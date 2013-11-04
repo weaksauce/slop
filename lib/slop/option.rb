@@ -2,7 +2,6 @@ module Slop
   class Option
 
     attr_reader :builder, :attributes, :type
-    attr_writer :writer
     attr_accessor :short, :long, :description, :block, :count, :argument
 
     def initialize(builder, attributes = {}, &block)
@@ -15,20 +14,27 @@ module Slop
       @argument    = nil
       @value       = nil
       @count       = 0
-      @type        = Type.from_name(attributes[:type]).new(builder)
-      @attributes  = @type.option_config.merge(@attributes)
+      @attributes  = type_class.option_config.merge(@attributes)
     end
 
-    def expects_argument?
-      attributes[:expects_argument]
+    def type_class
+      @type_class ||= Type.from_name(attributes[:type])
+    end
+
+    def argument?
+      attributes[:argument]
+    end
+
+    def key
+      long || short
     end
 
     def value
       @value || @argument || attributes[:default]
     end
 
-    def run_block
-      @value = type.call(@argument)
+    def call(result)
+      @value = type_class.new(result).call(@argument)
       block.call(@value) if block
     end
 
