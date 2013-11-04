@@ -1,11 +1,11 @@
 require "test_helper"
 
 describe Slop::Result do
-  subject { Slop.parse(%w"--name Lee") { |o| o.string :name } }
+  subject { Slop.parse(%w"--name Lee") { |o| o.string :name; o.bool :verbose } }
 
   describe "to_h" do
     it "returns option => arguments in hash form" do
-      subject.to_hash.must_equal({ name: "Lee" })
+      subject.to_hash.must_equal({ name: "Lee", verbose: nil })
     end
   end
 
@@ -13,7 +13,6 @@ describe Slop::Result do
     it "fetches the option and calls .value on it" do
       subject["name"].must_equal "Lee"
     end
-
   end
 
   describe "method_missing" do
@@ -26,7 +25,6 @@ describe Slop::Result do
     it "raises if not a valid option" do
       -> { subject.bar? }.must_raise(NoMethodError)
     end
-
   end
 
 end

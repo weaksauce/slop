@@ -1,7 +1,7 @@
 require "test_helper"
 
 describe Slop::Builder do
-  subject      { Slop::Builder.new }
+  subject { Slop::Builder.new }
 
   describe "#on" do
     it "returns a Slop::Option" do

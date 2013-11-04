@@ -33,7 +33,7 @@ module Slop
     end
 
     def to_hash
-      parser.options.each_with_object({}) do |option, result|
+      builder.options.each_with_object({}) do |option, result|
         result[option.key] = option.value
       end
     end
