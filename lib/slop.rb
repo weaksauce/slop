@@ -1,5 +1,4 @@
 require 'slop/type'
-require 'slop/options'
 require 'slop/option'
 require 'slop/option_config'
 require 'slop/builder'

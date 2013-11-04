@@ -27,7 +27,7 @@ module Slop
     end
 
     def find_option(flag)
-      options.find_by_flag(flag)
+      builder.find_option(flag)
     end
 
     def method_missing(method_name, *args)

@@ -4,7 +4,7 @@ module Slop
 
     def initialize(parser)
       @parser  = parser
-      @options = Options.new
+      @options = []
       @values  = []
     end
 
@@ -14,6 +14,11 @@ module Slop
       option = Option.new(parser, config, &block)
       options << option
       option
+    end
+
+    def find_option(flag)
+      flag = flag.to_s.sub(/\A--?/, '')
+      options.find { |o| o.long == flag || o.short == flag }
     end
 
     def method_missing(method_name, *args, &block)
