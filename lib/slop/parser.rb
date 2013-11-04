@@ -1,15 +1,12 @@
 module Slop
   class Parser
-    attr_reader :config, :builder, :options, :parsed_options
+    attr_reader :config, :builder, :parsed_options
 
-    def initialize(config = {}, &block)
+    def initialize(builder, config = {}, &block)
       @config  = config
-      @builder = Builder.new(self)
-      @options = @builder.options
+      @builder = builder
 
       @parsed_options = []
-
-      block.call builder if block
     end
 
     def parse(items = ARGV, &block)

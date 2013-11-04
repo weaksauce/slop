@@ -28,13 +28,13 @@ module Slop
     add_alias "int",  "integer"
     add_alias "bool", "boolean"
 
-    attr_reader :parser
+    attr_reader :builder
 
-    def initialize(parser)
-      @parser = parser
+    def initialize(builder)
+      @builder = builder
     end
 
-    alias options parser
+    alias options builder
 
     def call
       raise

@@ -9,7 +9,9 @@ module Slop
 
   def self.parse(items = ARGV, config = {}, &block)
     config, items = items, ARGV if items.is_a?(Hash) && config.empty?
-    parser = Parser.new(config, &block)
+    builder = Builder.new(config)
+    yield builder if block_given?
+    parser = Parser.new(builder, config, &block)
     parser.parse(items)
     parser
   end

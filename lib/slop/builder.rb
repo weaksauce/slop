@@ -1,17 +1,16 @@
 module Slop
   class Builder
-    attr_reader :parser, :options
+    attr_reader :config, :options
 
-    def initialize(parser)
-      @parser  = parser
+    def initialize(config = {})
+      @config  = config
       @options = []
-      @values  = []
     end
 
     def on(*values, &block)
       config = OptionConfig.build(values)
       config[:type] ||= :string
-      option = Option.new(parser, config, &block)
+      option = Option.new(self, config, &block)
       options << option
       option
     end

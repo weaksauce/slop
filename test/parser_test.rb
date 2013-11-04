@@ -1,15 +1,8 @@
 require "test_helper"
 
 describe Slop::Parser do
-  subject { Slop::Parser.new }
-
-  describe ".new" do
-    it "yields an OptionBuilder" do
-      x = nil
-      Slop::Parser.new { |o| x = o }
-      x.must_be_kind_of Slop::Builder
-    end
-  end
+  let(:builder) { Slop::Builder.new }
+  subject { Slop::Parser.new(builder) }
 
   describe "#parse" do
     it "returns the original item list" do

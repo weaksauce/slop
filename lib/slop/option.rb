@@ -1,12 +1,12 @@
 module Slop
   class Option
 
-    attr_reader :parser, :attributes, :type
+    attr_reader :builder, :attributes, :type
     attr_writer :writer
     attr_accessor :short, :long, :description, :block, :count, :argument
 
-    def initialize(parser, attributes = {}, &block)
-      @parser      = parser
+    def initialize(builder, attributes = {}, &block)
+      @builder     = builder
       @attributes  = attributes
       @short       = attributes[:short]
       @long        = attributes[:long]
@@ -15,7 +15,7 @@ module Slop
       @argument    = nil
       @value       = nil
       @count       = 0
-      @type        = Type.from_name(attributes[:type]).new(parser)
+      @type        = Type.from_name(attributes[:type]).new(builder)
       @attributes  = @type.option_config.merge(@attributes)
     end
 
