@@ -4,7 +4,7 @@ module Slop
 
     def initialize(config = {}, &block)
       @config  = config
-      @builder = OptionBuilder.new(self)
+      @builder = Builder.new(self)
       @options = @builder.options
 
       @parsed_options = []

@@ -1,5 +1,5 @@
 module Slop
-  class OptionBuilder
+  class Builder
     attr_reader :parser, :options
 
     def initialize(parser)

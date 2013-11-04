@@ -1,8 +1,8 @@
 require "test_helper"
 
-describe Slop::OptionBuilder do
+describe Slop::Builder do
   let(:parser) { Slop::Parser.new }
-  subject      { Slop::OptionBuilder.new(parser) }
+  subject      { Slop::Builder.new(parser) }
 
   describe "#on" do
     it "returns a Slop::Option" do

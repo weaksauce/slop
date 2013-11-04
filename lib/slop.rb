@@ -2,7 +2,7 @@ require 'slop/processor'
 require 'slop/options'
 require 'slop/option'
 require 'slop/option_config'
-require 'slop/option_builder'
+require 'slop/builder'
 require 'slop/parser'
 
 module Slop

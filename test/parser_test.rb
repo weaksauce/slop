@@ -7,7 +7,7 @@ describe Slop::Parser do
     it "yields an OptionBuilder" do
       x = nil
       Slop::Parser.new { |o| x = o }
-      x.must_be_kind_of Slop::OptionBuilder
+      x.must_be_kind_of Slop::Builder
     end
   end
 
