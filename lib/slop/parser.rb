@@ -27,14 +27,14 @@ module Slop
 
         if option
           if option.argument? && argument.nil?
-            raise "No argument given for `#{flag}'"
+            raise MissingArgument, "No argument given for `#{flag}'"
           end
           execute_option(option, argument)
         else
           if flag[1] != '-' && flag.size > 2
             parse_multiple(flag, argument)
           else
-            raise "Unknown option `#{flag}'"
+            raise UnknownOption, "Unknown option `#{flag}'"
           end
         end
       else

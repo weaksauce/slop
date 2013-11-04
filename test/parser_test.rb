@@ -20,6 +20,11 @@ describe Slop::Parser do
     #   end
     # end
 
+    it "raises if an option expects an argument and none is given" do
+      subject.builder.string "name"
+      -> { subject.parse %w"--name" }.must_raise(Slop::MissingArgument)
+    end
+
     describe "with valid options" do
       before do
         subject.builder.string "foo"
@@ -66,7 +71,7 @@ describe Slop::Parser do
       end
 
       it "raises for unknown options" do
-        -> { subject.parse %w(-abd) }.must_raise(RuntimeError)
+        -> { subject.parse %w(-abd) }.must_raise(Slop::UnknownOption)
       end
     end
   end

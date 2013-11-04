@@ -4,6 +4,7 @@ require 'slop/option_config'
 require 'slop/builder'
 require 'slop/parser'
 require 'slop/result'
+require 'slop/errors'
 
 module Slop
   VERSION = '4.0.0'
@@ -11,7 +12,6 @@ module Slop
   def self.parse(items = ARGV, config = {}, &block)
     config, items = items, ARGV if items.is_a?(Hash) && config.empty?
     builder = Builder.new(config, &block)
-    parser = Parser.new(builder, config, &block)
-    parser.parse(items)
+    Parser.new(builder, config, &block).parse(items)
   end
 end
